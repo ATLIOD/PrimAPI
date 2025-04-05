@@ -43,6 +43,21 @@ Example response:
 }
 ```
 
+### Supported Species
+
+The API currently supports facts about the following primate species:
+
+- Aye-aye
+- Baboon
+- Capuchin
+- Chimpanzee
+- Gibbon
+- Golden Monkey
+- Gorilla
+- Howler Monkey
+- Proboscis Monkey
+- Tarsier
+
 ## Prerequisites
 
 - Docker
