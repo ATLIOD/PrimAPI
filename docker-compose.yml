@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:17
+    container_name: primapi_db
+    environment:
+      POSTGRES_USER: monkey_user
+      POSTGRES_PASSWORD: monkey_pass
+      POSTGRES_DB: primate_facts
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U monkey_user -d primate_facts"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build: .
+    container_name: primapi_api
+    ports:
+      - "8080:8080"
+    environment:
+      - DB_CONNECTION_STRING=postgresql://monkey_user:monkey_pass@postgres:5432/primate_facts?sslmode=disable
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  postgres_data: 
